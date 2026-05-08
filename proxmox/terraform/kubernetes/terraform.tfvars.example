@@ -1,0 +1,15 @@
+endpoint       = "https://<ip>:<port>/"
+pve_ip_address = "<ip>"
+gateway        = "<ip>"
+
+api_token_id  = "<proxmox_user>@<realm>!<token_name>"
+api_token     = "<token_value>"
+tls_insecure  = bool
+template_vmid = number
+
+# Must be set to true after running the terraform apply for the first time to create the template VM.
+is_template = bool
+
+ssh_user            = "pve_node_user"
+ssh_password        = "pve_node_password"
+ssh_public_key_path = "<path_to_public_key>"
