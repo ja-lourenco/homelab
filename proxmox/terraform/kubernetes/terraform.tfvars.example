@@ -1,6 +1,6 @@
-endpoint       = "https://<ip>:<port>/"
+cidr           = "<cidr>"
 pve_ip_address = "<ip>"
-gateway        = "<ip>"
+endpoint       = "https://<ip>:<port>/"
 
 api_token_id  = "<proxmox_user>@<realm>!<token_name>"
 api_token     = "<token_value>"
