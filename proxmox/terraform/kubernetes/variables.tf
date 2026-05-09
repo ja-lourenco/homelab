@@ -1,3 +1,8 @@
+variable "cidr" {
+  type        = string
+  description = "CIDR for the Kubernetes cluster"
+}
+
 variable "endpoint" {
   type        = string
   description = "Proxmox API URL"
@@ -6,11 +11,6 @@ variable "endpoint" {
 variable "pve_ip_address" {
   type        = string
   description = "Proxmox VE IP Address"
-}
-
-variable "gateway" {
-  type        = string
-  description = "Gateway"
 }
 
 variable "api_token_id" {

@@ -4,11 +4,9 @@ locals {
     vmid_prefix = var.template_vmid
     node_name   = "pve"
 
+    started         = true
     on_boot         = true
     stop_on_destroy = true
-    boot_order      = ["scsi0"]
-    scsi_hardware   = "virtio-scsi-pci"
-    gateway         = var.gateway
 
     tags = ["terraform", "k8s"]
   }
@@ -35,7 +33,6 @@ locals {
 
     interface = {
       scsi = "scsi0"
-      ide  = "ide2"
     }
 
     size = {
