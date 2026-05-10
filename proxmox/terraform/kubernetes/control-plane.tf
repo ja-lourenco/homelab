@@ -20,7 +20,7 @@ resource "proxmox_virtual_environment_vm" "control_plane" {
     ip_config {
       ipv4 {
         address = format("%s/24", cidrhost(var.cidr, local.vm_id))
-        gateway = cidrhost(var.cidr, 1)
+        gateway = local.common.gateway
       }
     }
   }

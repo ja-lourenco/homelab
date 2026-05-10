@@ -4,6 +4,8 @@ locals {
     vmid_prefix = var.template_vmid
     node_name   = "pve"
 
+    gateway = cidrhost(var.cidr, 1)
+
     started         = true
     on_boot         = true
     stop_on_destroy = true
@@ -11,53 +13,41 @@ locals {
     tags = ["terraform", "k8s"]
   }
 
-  agent = {
-    status = false
-  }
+  vm_defaults = {
+    agent_enabled = false
+    cpu_cores     = 2
+    cpu_type      = "x86-64-v2-AES"
 
-  cpu = {
-    cores = 2
-    type  = "x86-64-v2-AES"
-  }
+    memory_dedicated = 3072
+    memory_floating  = 0
 
-  memory = {
-    dedicated = 3072
-    floating  = 0
+    network_model  = "virtio"
+    network_bridge = "vmbr0"
+
+    os_type  = "l26"
+    vga_type = "serial0"
   }
 
   disk = {
+
+    interface = "scsi0"
     storage = {
       local = "local"
       lvm   = "local-lvm"
     }
 
-    interface = {
-      scsi = "scsi0"
-    }
-
-    size = {
+    sizes = {
       control_plane = 32
       worker        = 40
     }
   }
 
-  initialization = {
-    user_account = {
-      username = "ubuntu"
-      keys     = [trimspace(file(var.ssh_public_key_path))]
-    }
+  vm_user = {
+    username = "ubuntu"
+    keys     = [trimspace(file(var.ssh_public_key_path))]
   }
 
-  network = {
-    model  = "virtio"
-    bridge = "vmbr0"
-  }
-
-  operating_system = {
-    type = "l26"
-  }
-
-  vga = {
-    type = "serial0"
-  }
+  control_plane_vmid = local.common.vmid_prefix + 1
+  node_start_vmid    = local.common.vmid_prefix + 2
+  node_count         = 2
 }

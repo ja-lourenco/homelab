@@ -21,25 +21,25 @@ resource "proxmox_virtual_environment_vm" "ubuntu_server_24_template" {
   template = var.is_template
 
   agent {
-    enabled = local.agent.status
+    enabled = local.vm_defaults.agent_enabled
   }
   stop_on_destroy = true
 
   cpu {
-    cores = local.cpu.cores
-    type  = local.cpu.type
+    cores = local.vm_defaults.cpu_cores
+    type  = local.vm_defaults.cpu_type
   }
 
   memory {
-    dedicated = local.memory.dedicated
-    floating  = local.memory.floating
+    dedicated = local.vm_defaults.memory_dedicated
+    floating  = local.vm_defaults.memory_floating
   }
 
   disk {
     import_from  = proxmox_download_file.ubuntu_server_24_img.id
     datastore_id = local.disk.storage.lvm
-    interface    = local.disk.interface.scsi
-    size         = local.disk.size.control_plane
+    interface    = local.disk.interface
+    size         = local.disk.sizes.control_plane
   }
 
   initialization {
@@ -52,23 +52,23 @@ resource "proxmox_virtual_environment_vm" "ubuntu_server_24_template" {
     }
 
     user_account {
-      keys     = local.initialization.user_account.keys
-      username = local.initialization.user_account.username
+      username = local.vm_user.username
+      keys     = local.vm_user.keys
     }
   }
 
   network_device {
-    bridge = local.network.bridge
+    bridge = local.vm_defaults.network_bridge
   }
 
   operating_system {
-    type = local.operating_system.type
+    type = local.vm_defaults.os_type
   }
 
   serial_device {}
 
   vga {
-    type = local.vga.type
+    type = local.vm_defaults.vga_type
   }
 }
 
