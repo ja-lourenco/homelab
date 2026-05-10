@@ -1,10 +1,6 @@
-locals {
-  vm_id = local.common.vmid_prefix + 1
-}
-
 resource "proxmox_virtual_environment_vm" "control_plane" {
   name      = "${local.common.name_prefix}-control-plane"
-  vm_id     = local.vm_id
+  vm_id     = local.control_plane_vmid
   node_name = local.common.node_name
   tags      = concat(local.common.tags, ["control-plane"])
 
@@ -19,7 +15,7 @@ resource "proxmox_virtual_environment_vm" "control_plane" {
   initialization {
     ip_config {
       ipv4 {
-        address = format("%s/24", cidrhost(var.cidr, local.vm_id))
+        address = format("%s/24", cidrhost(var.cidr, local.control_plane_vmid))
         gateway = local.common.gateway
       }
     }

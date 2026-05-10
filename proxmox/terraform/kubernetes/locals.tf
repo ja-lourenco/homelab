@@ -38,7 +38,7 @@ locals {
 
     sizes = {
       control_plane = 32
-      worker        = 40
+      node          = 40
     }
   }
 
