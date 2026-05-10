@@ -1,7 +1,7 @@
 resource "proxmox_virtual_environment_vm" "node" {
   count = local.node_count
 
-  name      = "${local.common.name_prefix}-node"
+  name      = "${local.common.name_prefix}-node-${local.node_start_vmid + count.index}"
   node_name = local.common.node_name
   vm_id     = local.node_start_vmid + count.index
   tags      = concat(local.common.tags, ["node"])
