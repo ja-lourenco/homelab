@@ -2,8 +2,8 @@ resource "proxmox_virtual_environment_vm" "node" {
   count = local.node_count
 
   name      = "${local.common.name_prefix}-node-${local.node_start_vmid + count.index}"
-  node_name = local.common.node_name
   vm_id     = local.node_start_vmid + count.index
+  node_name = local.common.node_name
   tags      = concat(local.common.tags, ["node"])
 
   started = local.common.started
@@ -12,6 +12,14 @@ resource "proxmox_virtual_environment_vm" "node" {
   clone {
     vm_id = var.template_vmid
     full  = true
+  }
+
+  cpu {
+    cores = local.node.cpu_cores
+  }
+
+  memory {
+    dedicated = local.node.memory_dedicated
   }
 
   disk {
@@ -27,4 +35,6 @@ resource "proxmox_virtual_environment_vm" "node" {
       }
     }
   }
+
+  depends_on = [proxmox_virtual_environment_vm.ubuntu_server_24_template]
 }

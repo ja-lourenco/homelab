@@ -71,20 +71,3 @@ resource "proxmox_virtual_environment_vm" "ubuntu_server_24_template" {
     type = local.vm_defaults.vga_type
   }
 }
-
-resource "null_resource" "convert_to_template" {
-  depends_on = [proxmox_virtual_environment_vm.ubuntu_server_24_template]
-
-  connection {
-    type     = "ssh"
-    host     = var.pve_ip_address
-    user     = var.ssh_user
-    password = var.ssh_password
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "qm template ${local.common.vmid_prefix}"
-    ]
-  }
-}

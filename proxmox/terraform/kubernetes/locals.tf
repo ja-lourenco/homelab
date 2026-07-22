@@ -37,7 +37,7 @@ locals {
     }
 
     sizes = {
-      control_plane = 32
+      control_plane = 8
       node          = 40
     }
   }
@@ -47,7 +47,18 @@ locals {
     keys     = [trimspace(file(var.ssh_public_key_path))]
   }
 
-  control_plane_vmid = local.common.vmid_prefix + 1
-  node_start_vmid    = local.common.vmid_prefix + 2
-  node_count         = 2
+  control_plane = {
+    cpu_cores        = 2
+    memory_dedicated = 1536
+  }
+
+  node = {
+    cpu_cores        = 2
+    memory_dedicated = 2560
+  }
+
+  control_plane_vmid  = local.common.vmid_prefix + 10
+  control_plane_count = var.control_plane_count
+  node_start_vmid     = local.common.vmid_prefix + 20
+  node_count          = var.node_count
 }
