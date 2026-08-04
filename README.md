@@ -2,6 +2,8 @@
 
 Infrastructure for a Proxmox-based homelab. VMs for Kubernetes are provisioned with Terraform; Terraform state is stored on a MinIO LXC on the same cluster.
 
+![alt text](homelab.png)
+
 ## Layout
 
 ```text
